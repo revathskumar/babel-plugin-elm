@@ -1,0 +1,41 @@
+{
+  "name": "babel-plugin-elm",
+  "version": "0.1.0",
+  "description": "Babel plugin to compile elm code embedded in your app",
+  "main": "dist/plugin.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "prepublish": "npm run build",
+    "build": "babel src/ -d dist/",
+    "test": "mocha --compilers js:babel-core/register"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yormi/babel-plugin-elm.git"
+  },
+  "keywords": [
+    "babel",
+    "elm",
+    "compile"
+  ],
+  "author": "Guillaume Lambert",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/yormi/babel-plugin-elm/issues"
+  },
+  "homepage": "https://github.com/yormi/babel-plugin-elm#readme",
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-core": "^6.21.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-stage-0": "^6.16.0",
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0",
+    "standard": "^8.6.0"
+  },
+  "dependencies": {
+    "node-elm-compiler": "file:///home/guillaume/Documents/Random_Projects/myLibs/node-elm-compiler"
+  }
+}
