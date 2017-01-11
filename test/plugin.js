@@ -18,10 +18,10 @@ describe('Plugin', () => {
   })
 
   it('should ignore import with other extensions than .elm', () => {
-    expect(code).to.contain('.js')
+    expect(code).to.contain('.png')
   })
 
   it('should change .elm file', () => {
-    expect(code).to.contain('.jsx')
+    expect(code).to.contain('.js')
   })
 })

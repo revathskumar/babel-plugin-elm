@@ -1,2 +1,2 @@
 import './elm/test.elm'
-import './jsx/test.jsx'
+import './assets/anImage.png'
