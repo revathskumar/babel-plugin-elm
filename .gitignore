@@ -3,6 +3,8 @@ dist
 
 # Elm
 elm-stuff
+elm-package.json
+index.html
 
 # Logs
 logs
