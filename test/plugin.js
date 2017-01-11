@@ -21,7 +21,7 @@ describe('Plugin', () => {
     expect(code).to.contain('.png')
   })
 
-  it('should change .elm file', () => {
+  it('should change .elm import path', () => {
     expect(code).to.contain('.js')
   })
 })
