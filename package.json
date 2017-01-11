@@ -38,6 +38,6 @@
     "standard": "^8.6.0"
   },
   "dependencies": {
-    "node-elm-compiler": "file:///home/guillaume/Documents/Random_Projects/myLibs/node-elm-compiler"
+    "node-elm-compiler": "git+https://github.com/yormi/node-elm-compiler.git"
   }
 }
