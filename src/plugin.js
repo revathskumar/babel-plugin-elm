@@ -1,3 +1,4 @@
+import { StringLiteral } from 'babel-types'
 import elmCompiler from 'node-elm-compiler'
 import {
   dirname,
@@ -6,31 +7,47 @@ import {
 
 const temp = require('temp').track()
 
-export default function () {
+export default function ({ types: t }) {
   return {
     visitor: {
-      ImportDeclaration (path, node) {
-        if (isImportingAnElmAsset(path)) {
-          const assetAbsolutePath = getAssetAbsolutePath(path, node)
-          const tempFilePath = compile(assetAbsolutePath)
-          path.node.source.value = tempFilePath
+      CallExpression (path, node) {
+        if (isValidRequireStatement(path, t)) {
+          const rawPath = path.node.arguments[0].value
+          if (isImportingAnElmAsset(rawPath)) {
+            const newRequiredPath = getNewPath(rawPath, node)
+            transform(path, newRequiredPath)
+          }
         }
       }
     }
   }
 }
 
-const isImportingAnElmAsset = path => /.elm$/.test(getPathToImport(path))
+const isValidRequireStatement = (path, types) => {
+  const { callee: { name: calleeName }, arguments: args } = path.node
 
-const getPathToImport = path => path.node.source.value
+  const isRequireStatement = calleeName === 'require'
+  const hasStingLiteralAsFirstArg = args.length && types.isStringLiteral(args[0])
 
-const getAssetAbsolutePath = (path, node) => {
-  const assetPath = getPathToImport(path)
+  return isRequireStatement && hasStingLiteralAsFirstArg
+}
 
+const getNewPath = (rawPath, node) => {
+  const assetAbsolutePath = getAssetAbsolutePath(rawPath, node)
+  return compile(assetAbsolutePath)
+}
+
+const transform = (path, newRequiredPath) => {
+  path.node.arguments = [ StringLiteral(newRequiredPath) ]
+}
+
+const isImportingAnElmAsset = rawPath => /.elm$/.test(rawPath)
+
+const getAssetAbsolutePath = (rawPath, node) => {
   const importingFilePath = node.file.opts.filenameRelative
   const containingDir = dirname(importingFilePath)
 
-  return resolve(containingDir, assetPath)
+  return resolve(containingDir, rawPath)
 }
 
 const compile = fileToCompileAbsolutePath => {

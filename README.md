@@ -22,8 +22,7 @@ Probably better just to use it in dev and use [`elm-webpack-loader`](https://git
 
 ## Future features !?
 
-* Support `import` but not `require` for now
-* No watch capability (can be workaround with babel `--watch` option)
+* No watch capability (can be workarounded with `babel-watch`, `mocha --watch`, etc)
 * No cache
 
 ## Under the hood
